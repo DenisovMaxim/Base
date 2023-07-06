@@ -10,6 +10,12 @@
 class Writer {
 
 public:
+    /**
+     * @brief writeFile запись в файл
+     * @param data ссылка на вектор
+     * @param fd частота дискретизации
+     * @param ext используемый тип данных
+     */
     template<typename Type>
     void writeFile (std::vector <Type> const & data, int64_t fd, const std::string & ext); // ext - тип данных [s - short; f - float]
 
