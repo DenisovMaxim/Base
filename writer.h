@@ -6,6 +6,7 @@
 #include "signalFile.h"
 #include <cstdint>
 #include <vector>
+#include <typeinfo>
 
 class Writer {
 
@@ -14,10 +15,10 @@ public:
      * @brief writeFile запись в файл
      * @param data ссылка на вектор
      * @param fd частота дискретизации
-     * @param ext используемый тип данных
+     * @param ext используемый тип данных [s - short; f - float]
      */
     template<typename Type>
-    void writeFile (std::vector <Type> const & data, int64_t fd, const std::string & ext); // ext - тип данных [s - short; f - float]
+    void writeFile (const std::string & path, std::vector <Type> const & data, int64_t fd);
 
 
 private:
@@ -26,19 +27,19 @@ private:
 
 
 template<typename Type>
-void Writer :: writeFile (std::vector <Type> const & data, int64_t fd, const std::string &ext)
+void Writer :: writeFile (const std::string & path, std::vector <Type> const & data, int64_t fd)
 {
+    std:: string ext = typeid(data[0]).name();
     uint32_t size = data.size();
-    std::string path = ("/home/ann/WORK/work_mtlb/ourfile" + std::to_string(fd)+ ".iq" + ext);
-
-    std::ofstream OURfile (path);
+    std::string path_ = (path + std::to_string(fd)+ ".iq" + ext);
+    std::ofstream file (path_);
     for (uint32_t i = 0; i < size ; i++)
     {
-        OURfile.write((char*)&(data[i]),sizeof(Type));
+        file.write((char*)&(data[i]),sizeof(Type));
 
     }
 
-    OURfile.close();
+    file.close();
 
 
 
