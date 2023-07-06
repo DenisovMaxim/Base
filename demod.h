@@ -9,6 +9,12 @@
 class Demodulation {
 
 public:
+    /**
+     * @brief demodAM dfgh
+     * @param sigFile xcvb
+     * @return dftuygubni
+     */
+
     template<typename Type>
     std::vector <Type> demodAM (SignalFile<Type> const & sigFile);
     template<typename Type>
