@@ -17,8 +17,8 @@ public:
      * @param fd частота дискретизации
      * @param ext используемый тип данных [s - short; f - float]
      */
-    template<typename Type>
-    void writeFile (const std::string & path, std::vector <Type> const & data, int64_t fd);
+    template < typename Type >
+    void writeFile( const std::string& path, std::vector< Type > const& data, int64_t fd );
 
 
 private:
@@ -26,16 +26,14 @@ private:
 };
 
 
-template<typename Type>
-void Writer :: writeFile (const std::string & path, std::vector <Type> const & data, int64_t fd)
-{
-    std:: string ext = typeid(data[0]).name();
+template < typename Type >
+void Writer::writeFile( const std::string& path, std::vector< Type > const& data, int64_t fd ) {
+    std::string ext = typeid( data[ 0 ] ).name();
     uint32_t size = data.size();
-    std::string path_ = (path + std::to_string(fd)+ ".iq" + ext);
-    std::ofstream file (path_);
-    for (uint32_t i = 0; i < size ; i++)
-    {
-        file.write((char*)&(data[i]),sizeof(Type));
+    std::string path_ = ( path + std::to_string( fd ) + ".iq" + ext );
+    std::ofstream file( path_ );
+    for( uint32_t i = 0; i < size; i++ ) {
+        file.write( ( char* )&( data[ i ] ), sizeof( Type ) );
 
     }
 
