@@ -14,7 +14,6 @@ public:
      * @param sigFile xcvb
      * @return dftuygubni
      */
-
     template < typename Type >
     std::vector< Type > demodAM( SignalFile< Type > const& sigFile );
     template < typename Type >
@@ -41,11 +40,13 @@ std::vector< Type > Demodulation::demodFM( SignalFile< Type > const& sigFile ) {
     for( uint32_t i = 0; i < size; i++ ) {
         data[ i ] = sigFile.data( i ).arg();
     }
+
     for( uint32_t i = 0; i < size - 1; i++ ) {
-        Type dif = data[ i + 1 ] - data[ i ];
-        if( dif > M_PI ) dif -= 2 * M_PI;
-        if( dif < -M_PI ) dif += 2 * M_PI;
-        data[ i ] = dif * fSam - fCen * 2 * M_PI;
+        Type dif = ( data[ i + 1 ] - data[ i ] ) * 0.5 * M_1_PI;
+        if( dif > 0.5 ) dif--;
+        if( dif < -0.5 ) dif++;
+        data[ i ] = dif * fSam - fCen;
+
     }
     data[ size - 1 ] = 0;
     return std::move( data );
