@@ -11,11 +11,11 @@ class SignalFile {
 
 public:
 
-    SignalFile( int64_t fCen, int64_t fSam, uint64_t sz = 0, Type const* dt = 0 );
+    SignalFile( uint64_t fCen, uint32_t fSam, uint64_t sz = 0, Type const* dt = 0 );
 
-    const uint32_t size() const;
-    const int64_t& freqCenter() const;
-    int64_t const& freqSample() const;
+    const uint64_t size() const;
+    const uint64_t& freqCenter() const;
+    uint32_t const& freqSample() const;
     std::vector< Complex< Type > >& data();
     std::vector< Complex< Type > > const& data() const;
     Complex< Type >& data( uint64_t i );
@@ -26,13 +26,13 @@ public:
 private:
 
 
-    int64_t m_freqCenter;
-    int64_t m_freqSample;
+    uint64_t m_freqCenter;
+    uint32_t m_freqSample;
     std::vector< Complex< Type > > m_data;
 
 };
 template < typename Type >
-SignalFile< Type >::SignalFile( int64_t fCen, int64_t fSam, uint64_t sz, Type const* dt ) : m_freqCenter( fCen ), m_freqSample( fSam ) {
+SignalFile< Type >::SignalFile( uint64_t fCen, uint32_t fSam, uint64_t sz, Type const* dt ) : m_freqCenter( fCen ), m_freqSample( fSam ) {
     m_data.resize( sz );
     if( dt != nullptr ) {
         for( uint64_t i = 0; i < m_data.size(); i++ ) {
@@ -43,17 +43,17 @@ SignalFile< Type >::SignalFile( int64_t fCen, int64_t fSam, uint64_t sz, Type co
 }
 
 template < typename Type >
-const uint32_t SignalFile< Type >::size() const {
+const uint64_t SignalFile< Type >::size() const {
     return m_data.size();
 }
 
 template < typename Type >
-const int64_t& SignalFile< Type >::freqCenter() const {
+const uint64_t& SignalFile< Type >::freqCenter() const {
     return m_freqCenter;
 }
 
 template < typename Type >
-int64_t const& SignalFile< Type >::freqSample() const {
+uint32_t const& SignalFile< Type >::freqSample() const {
     return m_freqSample;
 }
 
