@@ -8,20 +8,20 @@ TEST( demodAM_test, first_test ) {
 
     Demodulation object;
 }
-
+// test_data_for_deAM
 TEST( demodAM_test, output_values ) {
 
     Reader reader;
-    SignalFile< float > fileM = reader.readFile< float >( "data/test_data_for_deAM" );
+    SignalFile< double > fileM = reader.readFile< double >( "data/new_test_for_deAM" ); // что сравнить
     Demodulation test_obj;
-    std::vector< float > data = test_obj.demodAM( fileM ); // vector for compare
+    std::vector< double > data = test_obj.demodAM( fileM ); // vector for compare
 
-
-    std::ifstream file( "data/TEST_deAM", std::fstream::binary );
+// TEST_deAM
+    std::ifstream file( "data/new_output_for_deAM", std::fstream::binary ); // с чем сравнить
     uint64_t size = data.size();
-    std::vector< float > ex_data( size );
+    std::vector< double > ex_data( size );
     for( uint64_t i = 0; i < size; i++ ) {
-        file.read( reinterpret_cast< char* >( &ex_data[ i ] ), sizeof( float ) );
+        file.read( reinterpret_cast< char* >( &ex_data[ i ] ), sizeof( double ) );
     }
     file.close();
 
