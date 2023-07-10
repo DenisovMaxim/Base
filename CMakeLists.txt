@@ -9,4 +9,5 @@ add_library(Base INTERFACE complex.h signalFile.h reader.h writer.h demod.h)
 
 if(UNITTEST)
         add_subdirectory(googletests/)
+        include("unittest.cmake")
 endif()

@@ -18,20 +18,18 @@ SignalFile< Type > Reader::readFile( std::string const& filename ) {
 
     std::ifstream file( filename, std::fstream::binary );
     if( !file.is_open() ) {
-        throw std::runtime_error( "cant open file " + filename );
+        throw std::runtime_error( "cant open file " );
     }
-    int64_t freqCen;
+    uint64_t freqCen;
     uint32_t freqSam;
     uint64_t size;
 
-    file.read( reinterpret_cast< char* >( &freqCen ), sizeof( int64_t ) );
+    file.read( reinterpret_cast< char* >( &freqCen ), sizeof( uint64_t ) );
     file.read( reinterpret_cast< char* >( &freqSam ), sizeof( uint32_t ) );
     file.read( reinterpret_cast< char* >( &size ), sizeof( uint64_t ) );
 
-    if( freqCen < 0 ) {
-        throw std::runtime_error( "invalid center frequency value" );
-    }
-    if( freqSam <= 0 ) {
+
+    if( freqSam == 0 ) {
         throw std::runtime_error( "invalid sample frequency value" );
     }
     if( size == 0 ) {
