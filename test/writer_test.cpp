@@ -3,10 +3,6 @@
 #include <vector>
 #include <fstream>
 
-TEST( TestWriter, Creating ) {
-	Writer fileWrite;
-}
-
 TEST( TestWriter, WriteFine ) {
 	uint64_t size = 100000;
 	std::vector< double > data_( size );
