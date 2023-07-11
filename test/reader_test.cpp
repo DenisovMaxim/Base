@@ -6,7 +6,7 @@
 TEST( reader_test, test_Fd ) {
 
 	Reader test_obj;
-	std::string ds = "data/reader_test/test_data_for_reader_Fd";
+    std::string ds = "data/test_data_for_reader_Fd";
 
 	try {
 		SignalFile< float > file = test_obj.readFile< float >( ds );
@@ -21,7 +21,7 @@ TEST( reader_test, test_Fd ) {
 TEST( reader_test, test_Fc ) {
 
 	Reader test_obj;
-	std::string ds = "data/reader_test/test_data_for_reader_Size";
+    std::string ds = "data/test_data_for_reader_Size";
 
 	try {
 		SignalFile< float > file = test_obj.readFile< float >( ds );

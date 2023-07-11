@@ -41,7 +41,7 @@ SignalFile< Type > Reader::readFile( std::string const& filename ) {
         file.read( reinterpret_cast< char* >( &( signalF.data( i ).im() ) ), sizeof( Type ) );
     }
     file.close();
-    return std::move( signalF );
+    return signalF;
 
 }
 
