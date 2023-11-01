@@ -71,7 +71,7 @@ public:
 	 * @brief arg метод для вычисления аргумента комплексного числа в радианах
 	 */
     const Type arg() const  {
-		return atan( im / re );
+        return atan2( im, re );
 	}
 
 	/**
