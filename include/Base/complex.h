@@ -1,239 +1,231 @@
-#ifndef COMPLEX_H
-#define COMPLEX_H
+#pragma once
 
-#define _USE_MATH_DEFINES
+#include <iostream>
 #include <cmath>
-#include <cstdint>
+#include <fstream>
 
-namespace Base {
+namespace Base{
 
-	template < typename Type >
-	class Complex {
+template < typename Type >
+class Complex {
 public:
-		Complex( Type Re = 0, Type Im = 0 );
-		template < typename TAnother > Complex( const Complex< TAnother >& another );
-		~Complex() {
-		}
+	template < typename T >
+    Complex( const Complex< T >& cp ) : re( cp.re ), im( cp.im ) {
 
-		Type& re();
-		Type const& re() const;
-		Type& im();
-		Type const& im() const;
+	}
+	/**
+	 * @brief Complex конструктор с одним параметром для вещественной части
+	 */
+	Complex( Type Re ) : re( Re ), im( 0 ) {
+	}
+	Complex() : re( 0 ), im( 0 ) {
+	}
+	/**
+	 * @brief Complex конструктор с двумя параметрами для задания вещественной
+	 * и мнимой части комплексного числа
+	 */
+	Complex( Type Re, Type Im ) : re( Re ), im( Im ) {
+	}
+	/**
+	 * @brief Complex конструктор копирования
+	 */
 
-		float abs() const;
-		float arg() const;
-		Type argDeg() const;
-		Complex< Type > conj() const;
-
-		template < typename TAnother >
-		Complex< Type >& operator=( const Complex< TAnother >& another );
-		template < typename TAnother >
-		Complex< Type >& operator+=( const Complex< TAnother >& another );
-		template < typename TAnother >
-		Complex< Type >& operator-=( const Complex< TAnother >& another );
-		template < typename TAnother >
-		Complex< Type >& operator*=( const Complex< TAnother >& another );
-		template < typename TAnother >
-		Complex< Type >& operator*=( const TAnother& another );
-		template < typename TAnother >
-		Complex< Type >& operator/=( const Complex< TAnother >& another );
-		template < typename TAnother >
-		Complex< Type >& operator/=( const TAnother& another );
-		Complex< Type > operator-() const;
-		template < typename TAnother >
-		bool operator==( Complex< TAnother > another ) const;
-		template < typename TAnother >
-		bool operator!=( Complex< TAnother > another ) const;
-		template < typename TAnother >
-		bool operator>( Complex< TAnother > another ) const;
-		template < typename TAnother >
-		bool operator<( Complex< TAnother > another ) const;
-		template < typename TAnother >
-		bool operator>=( Complex< TAnother > another ) const;
-		template < typename TAnother >
-		bool operator<=( Complex< TAnother > another ) const;
-
-private:
-		Type m_re;
-		Type m_im;
-	};
-
-	template < typename Type >
-	Complex< Type >::Complex( Type Re, Type Im ) : m_re( Re ), m_im( Im ) {
+    Complex( const Complex& c ) : re( c.re ), im( c.im ) {
+	}
+	/**
+	 * @brief Complex деструктор
+	 */
+	~Complex() {
 	}
 
-	template < typename Type >
-	Type& Complex< Type >::re() {
-		return m_re;
+	/**
+	 * @brief real метод для вывода вещественной части комплесного числа
+	 */
+    const Type real() const{
+		return re;
 	}
 
-	template < typename Type >
-	Type const& Complex< Type >::re() const {
-		return m_re;
+
+    const Type imag() const {
+		return im;
 	}
 
-	template < typename Type >
-	Type& Complex< Type >::im() {
-		return m_im;
+    const Type& real() {
+		return re;
 	}
 
-	template < typename Type >
-	Type const& Complex< Type >::im() const {
-		return m_im;
+
+    const Type& imag() {
+		return im;
 	}
 
-	template < typename Type >
-	float Complex< Type >::abs() const {
-		return sqrt( m_re * m_re + m_im * m_im );
+
+	/**
+	 * @brief abs метод для вычисления модуля комплексного числа
+	 */
+    const Type abs() const {
+		return sqrt( re * re + im *   im );
 	}
 
-	template < typename Type >
-	float Complex< Type >::arg() const {
-		return atan2( m_im, m_re );
+	/**
+	 * @brief arg метод для вычисления аргумента комплексного числа в радианах
+	 */
+    const Type arg() const  {
+		return atan( im / re );
 	}
 
-	template < typename Type >
-	Type Complex< Type >::argDeg() const {
-		return this->arg() * 180 * M_1_PI;
+	/**
+	 * @brief argDeg метод для вычисления аргумента комплексного числа в градусах
+	 */
+	const Type argDeg() {
+		return arg() * 180 / M_PI;
 	}
 
-	template < typename Type >
-	Complex< Type > Complex< Type >::conj() const {
-		Complex< Type > NewComp( m_re, -m_im );
-		return NewComp;
+
+	friend std::ostream& operator<<( std::ostream& os, Complex< Type > const& c ) {
+		os << c.re << ' ' << c.im << std::endl;
+		return os;
 	}
 
-	template < typename Type >
-	template < typename TAnother >
-	Complex< Type >& Complex< Type >::operator=( const Complex< TAnother >& another ) {
-		m_re = another.re();
-		m_im = another.im();
+	friend std::ifstream& operator>>( std::ifstream& in, Complex< Type >& c ) {
+		in >> c.re;
+		in >> c.im;
+		return in;
+	}
+
+	template < typename U >
+	Complex< Type >& operator=( const Complex< U >& c ) {
+		re = c.real();
+		im = c.imag();
 		return *this;
 	}
 
-	template < typename Type >
-	template < typename TAnother >
-	Complex< Type >::Complex( const Complex< TAnother >& another ) : m_re( another.re() ), m_im( another.im() ) {
-	}
-
-	template < typename Type >
-	template < typename TAnother >
-	Complex< Type >& Complex< Type >::operator+=( const Complex< TAnother >& another ) {
-		m_re += another.re();
-		m_im += another.im();
+	Complex< Type >& operator=( const Complex< Type >& c ) {
+		re = c.real();
+		im = c.imag();
 		return *this;
 	}
 
-	template < typename Type >
-	template < typename TAnother >
-	Complex< Type >& Complex< Type >::operator-=( const Complex< TAnother >& another ) {
-		m_re -= another.re();
-		m_im -= another.im();
+	template < typename U >
+	Complex< Type >& operator+=( const Complex< U >& c ) {
+		re += c.real();
+		im += c.imag();
 		return *this;
 	}
 
-	template < typename Type >
-	template < typename TAnother >
-	Complex< Type >& Complex< Type >::operator*=( const TAnother& another ) {
-		m_re *= another;
-		m_im *= another;
+	Complex& operator+=( Type a ) {
+		re += a;
 		return *this;
 	}
 
-	template < typename Type >
-	template < typename TAnother >
-	Complex< Type >& Complex< Type >::operator*=( const Complex< TAnother >& another ) {
-		m_re = m_re * another.re() - m_im * another.im();
-		m_im = m_re * another.im() + m_im * another.re();
+	Complex& operator*=( Type a ) {
+		re *= a;
+		im *= a;
 		return *this;
 	}
 
-	template < typename Type >
-	template < typename TAnother >
-	Complex< Type >& Complex< Type >::operator/=( const TAnother& another ) {
-		m_re = m_re / another;
-		m_im = m_im / another;
+	template < typename U >
+	Complex< Type >& operator-=( const Complex< U > c ) {
+		re -= c.real();
+		im -= c.imag();
 		return *this;
 	}
 
-	template < typename Type >
-	template < typename TAnother >
-	Complex< Type >& Complex< Type >::operator/=( const Complex< TAnother >& another ) {
-		*this = ( *this ) * another.conj() / another.abs() / another.abs();
+	template < typename U >
+	Complex< Type >& operator-=( const U a ) {
+		re -= a;
+		im -= a;
 		return *this;
 	}
 
-	template < typename Type >
-	template < typename TAnother >
-	bool Complex< Type >::operator==( Complex< TAnother > another ) const {
-		return ( m_re == another.re() ) && ( m_im == another.im() );
+
+	Complex operator-() const {
+		return Complex( -re, -im );
 	}
 
-	template < typename Type >
-	template < typename TAnother >
-	bool Complex< Type >::operator!=( Complex< TAnother > another ) const {
-		return !( *this == another );
+	/*
+	 *  перегрузка префиксного инкремента
+	 */
+	Complex& operator++() {
+		++re;
+		return *this;
 	}
 
-	template < typename Type >
-	Complex< Type > Complex< Type >::operator-() const {
-		return Complex< Type >( -m_re, -m_im );
-	}
-
-	template < typename TL,  typename TR >
-	Complex< TL >& operator+( const Complex< TL >& left, const Complex< TR >& right ) {
-		Complex< TL > tmp( left.re(), left.im() );
-		tmp += right;
+	/*
+	 *  перегрузка постфиксного инкремента
+	 */
+	Complex operator++( int ) {
+		Complex tmp( *this );
+		++( *this );
 		return tmp;
 	}
 
-	template < typename TL,  typename TR >
-	Complex< TL >& operator-( const Complex< TL >& left, const Complex< TR >& right ) {
-		Complex< TL > tmp( left.re(), left.im() );
-		tmp -= right;
+	/*
+	 *  перегрузка префиксного декремента
+	 */
+	Complex& operator--() {
+		--re;
+		return *this;
+	}
+
+	/*
+	 *  перегрузка постфиксного декремента
+	 */
+	Complex operator--( int ) {
+		Complex< Type > tmp( *this );
+		--( *this );
 		return tmp;
 	}
 
-	template < typename TL,  typename TR >
-	Complex< TL >& operator*( const Complex< TL >& left, const TR right ) {
-		Complex< TL > tmp( left.re(), left.im() );
-		tmp *= right;
-		return tmp;
-	}
+	bool operator==( const Complex< Type >& c ) const;
 
-	template < typename TL,  typename TR >
-	Complex< TL >& operator*( const TL& left, const Complex< TR > right ) {
-		return right * left;
-	}
+public:
+	Type re;
+	Type im;
+};
 
-	template < typename TL,  typename TR >
-	Complex< TL >& operator*( const Complex< TL >& left, const Complex< TR >& right ) {
-		Complex< TL > tmp( left.re(), left.im() );
-		tmp *= right;
-		return tmp;
-	}
-
-	template < typename TL,  typename TR >
-	Complex< TL >& operator/( const Complex< TL >& left, const TR right ) {
-		Complex< TL > tmp( left.re(), left.im() );
-		tmp /= right;
-		return tmp;
-	}
-
-	template < typename TL,  typename TR >
-	Complex< TL >& operator/( const TL& left, const Complex< TR > right ) {
-		Complex< TL > tmp( left );
-		tmp /= right;
-		return tmp;
-	}
-
-	template < typename TL,  typename TR >
-	Complex< TL >& operator/( const Complex< TL >& left, const Complex< TR >& right ) {
-		Complex< TL > tmp( left.re(), left.im() );
-		tmp /= right;
-		return tmp;
-	}
+template < typename T, typename U >
+Complex< T > operator+( Complex< T > c1, Complex< U > c2 ) {
+	Complex< T > r = c1;
+	return r += c2;
 }
-#endif // COMPLEX_H
 
 
+template < typename T, typename U >
+Complex< T >& operator+( Complex< T > c1, U c2 ) {
+	Complex< T > r = c1;
+	return r += c2;
+}
+
+
+template < typename T, typename U >
+Complex< U >& operator+( T c1, Complex< U > c2 ) {
+	Complex< U > r = c2;
+	return r += c1;
+}
+
+template < typename T, typename U >
+Complex< T >& operator-( Complex< T > c1, Complex< U > c2 ) {
+	Complex< T > r = c1;
+	return r -= c2;
+}
+
+template < typename T, typename U >
+Complex< T >& operator-( Complex< T > c1, U c2 ) {
+	Complex< T > r = c1;
+	return r -= c2;
+}
+
+
+template < typename T, typename U >
+Complex< T >& operator-( T c1, const Complex< U >& c2 ) {
+	Complex< T > r = c1;
+	return r -= c2;
+	;
+}
+
+template < class T >
+bool Complex< T >::operator==( const Complex< T >& c ) const {
+	return ( re == c.re && im == c.im );
+}
+}
