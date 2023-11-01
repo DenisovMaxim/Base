@@ -8,6 +8,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 file(GLOB SRC include/${PROJECT_NAME}/*.h )
 add_library(${PROJECT_NAME} INTERFACE ${SRC})
 
-target_include_directories(${PROJECT_NAME} INTERFACE include/)
+target_include_directories(${PROJECT_NAME} INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/include/)
 
 include("unittest.cmake")

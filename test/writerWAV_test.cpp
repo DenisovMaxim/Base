@@ -3,6 +3,8 @@
 #include <vector>
 #include <fstream>
 
+using namespace Base;
+
 TEST( TestWriteWAV, WriteWAVFine ) {
 	std::ifstream file( "data/dataWAV44100.iqf", std::fstream::binary );
 	uint32_t size = 0;

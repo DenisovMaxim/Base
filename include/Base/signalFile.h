@@ -38,8 +38,8 @@ private:
 		m_data.resize( sz );
 		if( dt != nullptr ) {
 			for( uint64_t i = 0; i < m_data.size(); i++ ) {
-				m_data[ i ].re() = dt[ 2 * i ];
-				m_data[ i ].im() = dt[ 2 * i + 1 ];
+                m_data[ i ].re = dt[ 2 * i ];
+                m_data[ i ].im = dt[ 2 * i + 1 ];
 			}
 		}
 	}

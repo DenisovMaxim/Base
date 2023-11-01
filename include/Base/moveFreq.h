@@ -28,8 +28,8 @@ private:
 		for( uint64_t i = 0; i < size; i++ ) {
 			float newArg = sigFile.data( i ).arg() - i * freqCen * 2 * M_PI / freqSam;
 			float absVal = sigFile.data( i ).abs();
-			newData[ i ].re() = absVal * cos( newArg );
-			newData[ i ].im() = absVal * sin( newArg );
+            newData[ i ].re = absVal * cos( newArg );
+            newData[ i ].im = absVal * sin( newArg );
 		}
 		return newData;
 	}
@@ -39,8 +39,8 @@ private:
 		for( uint64_t i = 0; i < N; i++ ) {
 			float newArg = dataIn[ i ].arg() - i * Fc * 2 * M_PI / Fs;
 			float absVal = dataIn[ i ].abs();
-			dataOut[ i ].re() = absVal * cos( newArg );
-			dataOut[ i ].im() = absVal * sin( newArg );
+            dataOut[ i ].re = absVal * cos( newArg );
+            dataOut[ i ].im = absVal * sin( newArg );
 		}
 	}
 

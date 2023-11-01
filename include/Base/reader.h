@@ -39,8 +39,8 @@ private:
 		}
 		Base::SignalFile< Type > signalF( freqCen, freqSam, size );
 		for( uint64_t i = 0; i < size; i++ ) {
-			file.read( reinterpret_cast< char* >( &( signalF.data( i ).re() ) ), sizeof( Type ) );
-			file.read( reinterpret_cast< char* >( &( signalF.data( i ).im() ) ), sizeof( Type ) );
+            file.read( reinterpret_cast< char* >( &( signalF.data( i ).re ) ), sizeof( Type ) );
+            file.read( reinterpret_cast< char* >( &( signalF.data( i ).im ) ), sizeof( Type ) );
 		}
 		file.close();
 		return signalF;
