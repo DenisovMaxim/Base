@@ -3,6 +3,8 @@
 #include <vector>
 #include <fstream>
 
+using namespace Base;
+
 TEST( TestWriter, WriteFine ) {
 	uint64_t size = 100000;
 	std::vector< double > data_( size );

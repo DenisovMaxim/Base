@@ -3,6 +3,8 @@
 #include "../include/Base/signalFile.h"
 #include "../include/Base/complex.h"
 
+using namespace Base;
+
 TEST( reader_test, test_Fd ) {
 
 	Reader test_obj;
