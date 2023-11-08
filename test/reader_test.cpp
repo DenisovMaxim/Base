@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
-#include "../include/Base/reader.h"
-#include "../include/Base/signalFile.h"
-#include "../include/Base/complex.h"
+#include "base/reader.h"
+#include "base/signalFile.h"
+#include "base/complex.h"
 
 using namespace Base;
 
